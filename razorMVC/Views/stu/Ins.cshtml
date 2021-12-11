@@ -1,0 +1,96 @@
+﻿@model razorMVC.Models.student
+@{
+    ViewBag.Title = "StudentView";
+}
+
+<script>
+    function changeBackgroundColor(x) {
+
+        x.style.background = "grey";
+    }
+</script>
+
+<h2>StudentView</h2>
+@using (Html.BeginForm("Ins", "stu", FormMethod.Post))
+
+{
+    @Html.HiddenFor(x => x.sid)
+    <center>
+        <table>
+            <tr>
+                <td style="font-size:12px;">Name:</td>
+                <td style="font-size:12px;" id="txt_name" onfocus="changeBackgroundColor(this)">@Html.TextBoxFor(x => x.name)</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td style="font-size:12px;">Age:</td>
+                <td style="font-size:12px;">@Html.TextBoxFor(x => x.age)</td>
+            </tr>
+
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+
+            <tr>
+                <td style="font-size:12px;">Country:</td>
+                <td style="font-size:12px;">@Html.DropDownListFor(x => x.country, new SelectList(ViewBag.ctr, "cid", "cname"), "--Select--", new { onchange = "BindState()" })</td>
+            </tr>
+
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+
+            <tr>
+                <td style="font-size:12px;">State:</td>
+                <td style="font-size:12px;">@Html.DropDownListFor(x => x.state, new SelectList(ViewBag.sta, "stid", "sname"), "--Select--")</td>
+            </tr>
+
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+
+            <tr>
+                <td colspan="2" align="center"><input type="submit" value="@ViewBag.btn_name" /></td>
+            </tr>
+
+        </table>
+
+    </center>
+}
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+<script type="text/javascript">
+
+    function BindState() {
+        jQuery.ajax({
+
+            url: '../stu/getState',
+            //url: '<%= UrlHelper.Action("stu", "getState") %>',
+            type: 'post',
+            data: { A: jQuery("#country").val() },
+            success: function (data) {
+                jQuery("#state").empty();
+                jQuery("#state").append(jQuery('<option></option>').html("--Select--").val(0));
+
+                for (var i = 0; i < data.length; i++) {
+                    jQuery("#state").append(jQuery('<option></option>').html(data[i].sname).val(data[i].stid));
+                }
+            },
+
+            error: function () {
+                alert("State could not bind....");
+            }
+
+
+        });
+
+
+    }
+
+</script>
+
+

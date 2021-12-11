@@ -1,0 +1,40 @@
+﻿@model IEnumerable<razorMVC.Models.StudentJoin>
+@{
+    ViewBag.Title = "Displaying Records";
+}
+
+<h3>Displaying Records</h3>
+<center>
+    <table border="0" cellspacing="10" cellpadding="5">
+        <tr>
+            <th style="background-color:red;color:white;text-align:center">Name</th>
+            <th>&nbsp;</th>
+            <th align="center" style="background-color:red;color:white;text-align:center">Age</th>
+            <th>&nbsp;</th>
+            <th align="center" style="background-color:red;color:white;text-align:center">Country</th>
+            <th>&nbsp;</th>
+            <th align="center" style="background-color:red;color:white;text-align:center">State</th>
+            <th>&nbsp;</th>
+            <th></th>
+        </tr>
+
+        @foreach (var i in Model)
+        {
+            <tr>
+                <td style="text-align:center;text-decoration:blink">@i.name</td>
+                <th>&nbsp;</th>
+                <td style="text-align:center">@i.age</td>
+                <th>&nbsp;</th>
+                <td style="text-align:center">@i.ctr_name</td>
+                <td>&nbsp;</td>
+                <td style="text-align:center">@i.state_name</td>
+                <td>&nbsp;</td>
+                <td>@Html.ActionLink("Delete", "Del", new { id = i.sid })</td>
+                <th>&nbsp;</th>
+                <td>@Html.ActionLink("Edit", "Ins", new { id = i.sid })</td>
+
+            </tr>
+        }
+
+    </table>
+</center>
